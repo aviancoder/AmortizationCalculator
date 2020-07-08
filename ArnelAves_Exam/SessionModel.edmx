@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ArnelAvesExamModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AmortizationSchedules">
+          <Key>
+            <PropertyRef Name="AmortizationID" />
+          </Key>
+          <Property Name="AmortizationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ScheduleOrderNumber" Type="int" />
+          <Property Name="DueDate" Type="datetime" />
+          <Property Name="PrincipalAmount" Type="float" />
+          <Property Name="InterestRate" Type="float" />
+          <Property Name="InterestAmount" Type="float" />
+          <Property Name="DueAmount" Type="float" />
+          <Property Name="RemainingBalance" Type="float" />
+          <Property Name="DaysInterval" Type="int" />
+          <Property Name="SessionNumber" Type="int" />
+        </EntityType>
+        <EntityType Name="ConsumerLoanSsessions">
+          <Key>
+            <PropertyRef Name="SessionNumber" />
+          </Key>
+          <Property Name="SessionNumber" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SessionTimeStamp" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="LoanAmount" Type="float" />
+          <Property Name="LoanTenure" Type="float" />
+          <Property Name="LoanInterest" Type="float" />
+          <Property Name="StartDate" Type="datetime2" Precision="7" />
+        </EntityType>
+        <Association Name="FK_AmortizationSchedules_ConsumerLoanSsessions">
+          <End Role="ConsumerLoanSsessions" Type="Self.ConsumerLoanSsessions" Multiplicity="0..1" />
+          <End Role="AmortizationSchedules" Type="Self.AmortizationSchedules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ConsumerLoanSsessions">
+              <PropertyRef Name="SessionNumber" />
+            </Principal>
+            <Dependent Role="AmortizationSchedules">
+              <PropertyRef Name="SessionNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ArnelAvesExamModelStoreContainer">
+          <EntitySet Name="AmortizationSchedules" EntityType="Self.AmortizationSchedules" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConsumerLoanSsessions" EntityType="Self.ConsumerLoanSsessions" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AmortizationSchedules_ConsumerLoanSsessions" Association="Self.FK_AmortizationSchedules_ConsumerLoanSsessions">
+            <End Role="ConsumerLoanSsessions" EntitySet="ConsumerLoanSsessions" />
+            <End Role="AmortizationSchedules" EntitySet="AmortizationSchedules" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ArnelAvesExamModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AmortizationSchedule">
+          <Key>
+            <PropertyRef Name="AmortizationID" />
+          </Key>
+          <Property Name="AmortizationID" Type="Int32" Nullable="false" />
+          <Property Name="ScheduleOrderNumber" Type="Int32" />
+          <Property Name="DueDate" Type="DateTime" Precision="3" />
+          <Property Name="PrincipalAmount" Type="Double" />
+          <Property Name="InterestRate" Type="Double" />
+          <Property Name="InterestAmount" Type="Double" />
+          <Property Name="DueAmount" Type="Double" />
+          <Property Name="RemainingBalance" Type="Double" />
+          <Property Name="DaysInterval" Type="Int32" />
+          <Property Name="SessionNumber" Type="Int32" />
+          <NavigationProperty Name="ConsumerLoanSsession" Relationship="Self.FK_AmortizationSchedules_ConsumerLoanSsessions" FromRole="AmortizationSchedules" ToRole="ConsumerLoanSsessions" />
+        </EntityType>
+        <EntityType Name="ConsumerLoanSsession">
+          <Key>
+            <PropertyRef Name="SessionNumber" />
+          </Key>
+          <Property Name="SessionNumber" Type="Int32" Nullable="false" />
+          <Property Name="SessionTimeStamp" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="LoanAmount" Type="Double" />
+          <Property Name="LoanTenure" Type="Double" />
+          <Property Name="LoanInterest" Type="Double" />
+          <NavigationProperty Name="AmortizationSchedules" Relationship="Self.FK_AmortizationSchedules_ConsumerLoanSsessions" FromRole="ConsumerLoanSsessions" ToRole="AmortizationSchedules" />
+          <Property Name="StartDate" Type="DateTime" Precision="7" />
+        </EntityType>
+        <Association Name="FK_AmortizationSchedules_ConsumerLoanSsessions">
+          <End Role="ConsumerLoanSsessions" Type="Self.ConsumerLoanSsession" Multiplicity="0..1" />
+          <End Role="AmortizationSchedules" Type="Self.AmortizationSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ConsumerLoanSsessions">
+              <PropertyRef Name="SessionNumber" />
+            </Principal>
+            <Dependent Role="AmortizationSchedules">
+              <PropertyRef Name="SessionNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ArnelAvesExamEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AmortizationSchedules" EntityType="Self.AmortizationSchedule" />
+          <EntitySet Name="ConsumerLoanSsessions" EntityType="Self.ConsumerLoanSsession" />
+          <AssociationSet Name="FK_AmortizationSchedules_ConsumerLoanSsessions" Association="Self.FK_AmortizationSchedules_ConsumerLoanSsessions">
+            <End Role="ConsumerLoanSsessions" EntitySet="ConsumerLoanSsessions" />
+            <End Role="AmortizationSchedules" EntitySet="AmortizationSchedules" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ArnelAvesExamModelStoreContainer" CdmEntityContainer="ArnelAvesExamEntities">
+          <EntitySetMapping Name="AmortizationSchedules">
+            <EntityTypeMapping TypeName="ArnelAvesExamModel.AmortizationSchedule">
+              <MappingFragment StoreEntitySet="AmortizationSchedules">
+                <ScalarProperty Name="AmortizationID" ColumnName="AmortizationID" />
+                <ScalarProperty Name="ScheduleOrderNumber" ColumnName="ScheduleOrderNumber" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="PrincipalAmount" ColumnName="PrincipalAmount" />
+                <ScalarProperty Name="InterestRate" ColumnName="InterestRate" />
+                <ScalarProperty Name="InterestAmount" ColumnName="InterestAmount" />
+                <ScalarProperty Name="DueAmount" ColumnName="DueAmount" />
+                <ScalarProperty Name="RemainingBalance" ColumnName="RemainingBalance" />
+                <ScalarProperty Name="DaysInterval" ColumnName="DaysInterval" />
+                <ScalarProperty Name="SessionNumber" ColumnName="SessionNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConsumerLoanSsessions">
+            <EntityTypeMapping TypeName="ArnelAvesExamModel.ConsumerLoanSsession">
+              <MappingFragment StoreEntitySet="ConsumerLoanSsessions">
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="SessionNumber" ColumnName="SessionNumber" />
+                <ScalarProperty Name="SessionTimeStamp" ColumnName="SessionTimeStamp" />
+                <ScalarProperty Name="LoanAmount" ColumnName="LoanAmount" />
+                <ScalarProperty Name="LoanTenure" ColumnName="LoanTenure" />
+                <ScalarProperty Name="LoanInterest" ColumnName="LoanInterest" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

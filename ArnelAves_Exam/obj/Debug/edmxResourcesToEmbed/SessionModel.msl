@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ArnelAvesExamModelStoreContainer" CdmEntityContainer="ArnelAvesExamEntities">
+    <EntitySetMapping Name="AmortizationSchedules">
+      <EntityTypeMapping TypeName="ArnelAvesExamModel.AmortizationSchedule">
+        <MappingFragment StoreEntitySet="AmortizationSchedules">
+          <ScalarProperty Name="AmortizationID" ColumnName="AmortizationID" />
+          <ScalarProperty Name="ScheduleOrderNumber" ColumnName="ScheduleOrderNumber" />
+          <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+          <ScalarProperty Name="PrincipalAmount" ColumnName="PrincipalAmount" />
+          <ScalarProperty Name="InterestRate" ColumnName="InterestRate" />
+          <ScalarProperty Name="InterestAmount" ColumnName="InterestAmount" />
+          <ScalarProperty Name="DueAmount" ColumnName="DueAmount" />
+          <ScalarProperty Name="RemainingBalance" ColumnName="RemainingBalance" />
+          <ScalarProperty Name="DaysInterval" ColumnName="DaysInterval" />
+          <ScalarProperty Name="SessionNumber" ColumnName="SessionNumber" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ConsumerLoanSsessions">
+      <EntityTypeMapping TypeName="ArnelAvesExamModel.ConsumerLoanSsession">
+        <MappingFragment StoreEntitySet="ConsumerLoanSsessions">
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="SessionNumber" ColumnName="SessionNumber" />
+          <ScalarProperty Name="SessionTimeStamp" ColumnName="SessionTimeStamp" />
+          <ScalarProperty Name="LoanAmount" ColumnName="LoanAmount" />
+          <ScalarProperty Name="LoanTenure" ColumnName="LoanTenure" />
+          <ScalarProperty Name="LoanInterest" ColumnName="LoanInterest" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ArnelAvesExamModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AmortizationSchedule">
+    <Key>
+      <PropertyRef Name="AmortizationID" />
+    </Key>
+    <Property Name="AmortizationID" Type="Int32" Nullable="false" />
+    <Property Name="ScheduleOrderNumber" Type="Int32" />
+    <Property Name="DueDate" Type="DateTime" Precision="3" />
+    <Property Name="PrincipalAmount" Type="Double" />
+    <Property Name="InterestRate" Type="Double" />
+    <Property Name="InterestAmount" Type="Double" />
+    <Property Name="DueAmount" Type="Double" />
+    <Property Name="RemainingBalance" Type="Double" />
+    <Property Name="DaysInterval" Type="Int32" />
+    <Property Name="SessionNumber" Type="Int32" />
+    <NavigationProperty Name="ConsumerLoanSsession" Relationship="Self.FK_AmortizationSchedules_ConsumerLoanSsessions" FromRole="AmortizationSchedules" ToRole="ConsumerLoanSsessions" />
+  </EntityType>
+  <EntityType Name="ConsumerLoanSsession">
+    <Key>
+      <PropertyRef Name="SessionNumber" />
+    </Key>
+    <Property Name="SessionNumber" Type="Int32" Nullable="false" />
+    <Property Name="SessionTimeStamp" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="LoanAmount" Type="Double" />
+    <Property Name="LoanTenure" Type="Double" />
+    <Property Name="LoanInterest" Type="Double" />
+    <NavigationProperty Name="AmortizationSchedules" Relationship="Self.FK_AmortizationSchedules_ConsumerLoanSsessions" FromRole="ConsumerLoanSsessions" ToRole="AmortizationSchedules" />
+    <Property Name="StartDate" Type="DateTime" Precision="7" />
+  </EntityType>
+  <Association Name="FK_AmortizationSchedules_ConsumerLoanSsessions">
+    <End Role="ConsumerLoanSsessions" Type="Self.ConsumerLoanSsession" Multiplicity="0..1" />
+    <End Role="AmortizationSchedules" Type="Self.AmortizationSchedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ConsumerLoanSsessions">
+        <PropertyRef Name="SessionNumber" />
+      </Principal>
+      <Dependent Role="AmortizationSchedules">
+        <PropertyRef Name="SessionNumber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ArnelAvesExamEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AmortizationSchedules" EntityType="Self.AmortizationSchedule" />
+    <EntitySet Name="ConsumerLoanSsessions" EntityType="Self.ConsumerLoanSsession" />
+    <AssociationSet Name="FK_AmortizationSchedules_ConsumerLoanSsessions" Association="Self.FK_AmortizationSchedules_ConsumerLoanSsessions">
+      <End Role="ConsumerLoanSsessions" EntitySet="ConsumerLoanSsessions" />
+      <End Role="AmortizationSchedules" EntitySet="AmortizationSchedules" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

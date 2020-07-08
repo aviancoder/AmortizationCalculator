@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Calculator Input";
+    DateTime defaultDate = DateTime.Now;
+    string strDefaultDate = defaultDate.ToString("yyyy-MM-dd");
+    string defaultLoanAmount = "1580544";
+    string defaultTenure = "52";
+    string defaultInterestRate = "7.55";
+    
+}
+
+<h2>Consumer Loan Calculator</h2>
+<div>
+    <form method="post" action="~/ConsumerLoanCalculator/clcdboutput">
+        
+        <table>
+            <tr>
+                <td><label for="TxtStartDate">Loan Start Date</label></td>
+                <td><input type="date" name="TxtStartDate" id="TxtStartDate" required value="@strDefaultDate" /></td>
+            </tr>
+            <tr>
+                <td><label for=" TxtLoanAmount">Loan Amount</label></td>
+                <td><input type="number" step=".01" name="TxtLoanAmount" required value="@defaultLoanAmount" /></td>
+            </tr>
+            <tr>
+                <td><label for=" InterestRate">Interest</label></td>
+                <td><input type="number" step=".01" name="TxtInterestRate" required value="@defaultInterestRate" /></td>
+            </tr>
+            <tr>
+                <td><label for=" TxtLoanTenure">Tenure in Months</label></td>
+                <td><input type="number" name="TxtLoanTenure" required value="@defaultTenure" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input class="ui-button-text" type="submit" name="BtnSubmit" title="Submit" /></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<script type="text/javascript">
+
+</script>

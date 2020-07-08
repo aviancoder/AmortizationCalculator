@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ArnelAvesExamModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AmortizationSchedules">
+    <Key>
+      <PropertyRef Name="AmortizationID" />
+    </Key>
+    <Property Name="AmortizationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ScheduleOrderNumber" Type="int" />
+    <Property Name="DueDate" Type="datetime" />
+    <Property Name="PrincipalAmount" Type="float" />
+    <Property Name="InterestRate" Type="float" />
+    <Property Name="InterestAmount" Type="float" />
+    <Property Name="DueAmount" Type="float" />
+    <Property Name="RemainingBalance" Type="float" />
+    <Property Name="DaysInterval" Type="int" />
+    <Property Name="SessionNumber" Type="int" />
+  </EntityType>
+  <EntityType Name="ConsumerLoanSsessions">
+    <Key>
+      <PropertyRef Name="SessionNumber" />
+    </Key>
+    <Property Name="SessionNumber" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SessionTimeStamp" Type="datetime2" Precision="7" Nullable="false" />
+    <Property Name="LoanAmount" Type="float" />
+    <Property Name="LoanTenure" Type="float" />
+    <Property Name="LoanInterest" Type="float" />
+    <Property Name="StartDate" Type="datetime2" Precision="7" />
+  </EntityType>
+  <Association Name="FK_AmortizationSchedules_ConsumerLoanSsessions">
+    <End Role="ConsumerLoanSsessions" Type="Self.ConsumerLoanSsessions" Multiplicity="0..1" />
+    <End Role="AmortizationSchedules" Type="Self.AmortizationSchedules" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ConsumerLoanSsessions">
+        <PropertyRef Name="SessionNumber" />
+      </Principal>
+      <Dependent Role="AmortizationSchedules">
+        <PropertyRef Name="SessionNumber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ArnelAvesExamModelStoreContainer">
+    <EntitySet Name="AmortizationSchedules" EntityType="Self.AmortizationSchedules" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ConsumerLoanSsessions" EntityType="Self.ConsumerLoanSsessions" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_AmortizationSchedules_ConsumerLoanSsessions" Association="Self.FK_AmortizationSchedules_ConsumerLoanSsessions">
+      <End Role="ConsumerLoanSsessions" EntitySet="ConsumerLoanSsessions" />
+      <End Role="AmortizationSchedules" EntitySet="AmortizationSchedules" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
